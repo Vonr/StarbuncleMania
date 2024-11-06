@@ -23,12 +23,13 @@ public class EidolonCrucibleWrapper extends MultiRecipeWrapper {
         if (level.getServer() == null) return wrapper;
         for (Recipe<?> r : level.getServer().getRecipeManager().getRecipes()) {
 
-            if (r.getResultItem(level.registryAccess()).getItem() != stack.getItem())
-                continue;
+            if (r instanceof CrucibleRecipe){
+                if (r.getResultItem(level.registryAccess()).getItem() != stack.getItem())
+                    continue;
 
-            if (r instanceof CrucibleRecipe)
+            
                 wrapper.addRecipe(r.getIngredients(), r.getResultItem(level.registryAccess()), r);
-
+            }
         }
 
         RECIPE_CACHE.put(stack.getItem(), wrapper);
