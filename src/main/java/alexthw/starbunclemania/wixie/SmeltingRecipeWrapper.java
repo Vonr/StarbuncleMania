@@ -22,13 +22,11 @@ public class SmeltingRecipeWrapper extends MultiRecipeWrapper {
         if (level.getServer() == null) return wrapper;
 
         for (RecipeHolder<?> r : level.getServer().getRecipeManager().getRecipes()) {
-
-            if (r.value().getResultItem(level.registryAccess()).getItem() != stack.getItem())
-                continue;
-
-            if (r.value() instanceof AbstractCookingRecipe cookingRecipe)
+            if (r.value() instanceof AbstractCookingRecipe cookingRecipe) {
+                if (cookingRecipe.getResultItem(level.registryAccess()).getItem() != stack.getItem())
+                    continue;
                 wrapper.addRecipe(cookingRecipe.getIngredients(), cookingRecipe.getResultItem(level.registryAccess()), cookingRecipe);
-
+            }
         }
 
         RECIPE_CACHE.put(stack.getItem(), wrapper);

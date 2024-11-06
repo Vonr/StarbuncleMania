@@ -3,7 +3,6 @@ package alexthw.starbunclemania.wixie;
 import com.hollingsworth.arsnouveau.api.recipe.MultiRecipeWrapper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -53,12 +52,12 @@ public class FarmerDelightRecipeWrappers {
             if (level.getServer() == null) return wrapper;
             for (RecipeHolder<?> r : level.getServer().getRecipeManager().getRecipes()) {
 
-                if (r.value().getResultItem(level.registryAccess()).getItem() != stack.getItem())
-                    continue;
-
                 if (r.value() instanceof CookingPotRecipe cookingPotRecipe) {
+                    if (cookingPotRecipe.getResultItem(level.registryAccess()).getItem() != stack.getItem())
+                        continue;
                     ArrayList<Ingredient> extended_ingredients = new ArrayList<>(cookingPotRecipe.getIngredients());
-                    extended_ingredients.add(Ingredient.of(Items.BOWL));
+                    if (!cookingPotRecipe.getOutputContainer().isEmpty())
+                        extended_ingredients.add(Ingredient.of(cookingPotRecipe.getOutputContainer()));
                     wrapper.addRecipe(extended_ingredients, cookingPotRecipe.getResultItem(level.registryAccess()), cookingPotRecipe);
                 }
 

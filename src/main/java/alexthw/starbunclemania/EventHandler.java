@@ -39,6 +39,5 @@ public class EventHandler {
 
         event.registerItem(Capabilities.FluidHandler.ITEM, (s, c) -> new FluidHandlerItemStack(ModRegistry.FLUID_CONTENT,s, LiquidJarTile.capacity),
                 ModRegistry.FLUID_JAR.get().asItem());
-
     }
 }

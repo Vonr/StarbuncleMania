@@ -21,13 +21,11 @@ public class StonecutterRecipeWrapper extends MultiRecipeWrapper {
         }
         if (level.getServer() == null) return wrapper;
         for (RecipeHolder<?> r : level.getServer().getRecipeManager().getRecipes()) {
-
-            if (r.value().getResultItem(level.registryAccess()).getItem() != stack.getItem())
-                continue;
-
-            if (r.value() instanceof StonecutterRecipe stonecutterRecipe)
+            if (r.value() instanceof StonecutterRecipe stonecutterRecipe) {
+                if (stonecutterRecipe.getResultItem(level.registryAccess()).getItem() != stack.getItem())
+                    continue;
                 wrapper.addRecipe(stonecutterRecipe.getIngredients(), stonecutterRecipe.getResultItem(level.registryAccess()), stonecutterRecipe);
-
+            }
         }
 
         RECIPE_CACHE.put(stack.getItem(), wrapper);

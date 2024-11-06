@@ -1,5 +1,6 @@
 package alexthw.starbunclemania.registry;
 
+import alexthw.starbunclemania.client.WixiePotRenderer;
 import alexthw.starbunclemania.common.block.wixie_stations.CuttingWixieCauldron;
 import alexthw.starbunclemania.common.block.wixie_stations.CuttingWixieCauldronTile;
 import alexthw.starbunclemania.common.block.wixie_stations.FarmerPotWixieCauldron;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import vectorwing.farmersdelight.common.block.CookingPotBlock;
@@ -24,7 +26,7 @@ public class FarmerDelightCompat {
     public static DeferredHolder<BlockEntityType<?>,BlockEntityType<CuttingWixieCauldronTile>> CUTTING_WIXIE_CAULDRON_TILE;
     public static DeferredHolder<BlockEntityType<?>,BlockEntityType<FarmerPotWixieCauldronTile>> COOKING_POT_WIXIE_CAULDRON_TILE;
 
-
+    @SuppressWarnings("DataFlowIssue")
     public static void register() {
 
         COOKING_POT_WIXIE_CAULDRON = ModRegistry.BLOCKS.register("cooking_pot_wixie_cauldron", FarmerPotWixieCauldron::new);
@@ -46,4 +48,9 @@ public class FarmerDelightCompat {
             cir.setReturnValue(InteractionResult.SUCCESS);
         }
     }
+
+    public static void onRegisterRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(COOKING_POT_WIXIE_CAULDRON_TILE.get(), WixiePotRenderer::new);
+    }
+
 }
