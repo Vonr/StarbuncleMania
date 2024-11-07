@@ -66,7 +66,7 @@ public class FarmerPotWixieCauldronTile extends WixieCauldronTile implements Geo
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar animatableManager) {
-        animatableManager.add(new AnimationController<>(this, "rotate_controller", 20,
+        animatableManager.add(new AnimationController<>(this, "rotate_controller", 40,
                 e -> isMixing ? e.setAndContinue(stir) : PlayState.STOP)
         );
     }
