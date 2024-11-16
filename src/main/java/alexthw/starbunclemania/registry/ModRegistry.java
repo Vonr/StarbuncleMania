@@ -212,10 +212,11 @@ public class ModRegistry {
 
         SMELTING_WIXIE_CAULDRON = BLOCKS.register("smelting_wixie_cauldron", SmeltingWixieCauldron::new);
         SMELTING_WIXIE_CAULDRON_TILE = BLOCK_ENTITIES.register("smelting_wixie_cauldron_tile", () -> BlockEntityType.Builder.of(SmeltingWixieCauldronTile::new, SMELTING_WIXIE_CAULDRON.get()).build(null));
+        ITEMS.register("smelting_wixie_cauldron", () -> new BlockItem(SMELTING_WIXIE_CAULDRON.get(), basicItemProperties()));
 
         STONEWORK_WIXIE_CAULDRON = BLOCKS.register("stonecutting_wixie_cauldron", StonecutterWixieCauldron::new);
         STONECUTTER_WIXIE_CAULDRON_TILE = BLOCK_ENTITIES.register("stonecutting_wixie_cauldron_tile", () -> BlockEntityType.Builder.of(StonecutterWixieCauldronTile::new, STONEWORK_WIXIE_CAULDRON.get()).build(null));
-
+        ITEMS.register("stonecutting_wixie_cauldron", () -> new BlockItem(STONEWORK_WIXIE_CAULDRON.get(), basicItemProperties()));
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SBM_TAB = TABS.register("general", () -> CreativeModeTab.builder()
