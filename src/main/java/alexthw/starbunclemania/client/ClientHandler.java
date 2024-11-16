@@ -2,6 +2,7 @@ package alexthw.starbunclemania.client;
 
 import alexthw.starbunclemania.StarbuncleMania;
 import alexthw.starbunclemania.registry.EidolonCompat;
+import alexthw.starbunclemania.registry.FarmerDelightCompat;
 import alexthw.starbunclemania.registry.ModRegistry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -29,6 +30,9 @@ public class ClientHandler {
 
         if (ModList.get().isLoaded("eidolon")) {
             EidolonCompat.onRegisterRenders(event);
+        }
+        if (ModList.get().isLoaded("farmersdelight")) {
+            FarmerDelightCompat.onRegisterRenders(event);
         }
     }
 

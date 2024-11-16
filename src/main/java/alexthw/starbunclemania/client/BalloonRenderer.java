@@ -1,7 +1,6 @@
 package alexthw.starbunclemania.client;
 
 import alexthw.starbunclemania.common.item.cosmetic.StarBalloon;
-import com.hollingsworth.arsnouveau.client.renderer.item.FixedGeoItemRenderer;
 import com.hollingsworth.arsnouveau.client.renderer.tile.GenericModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -9,9 +8,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.object.Color;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 
-public class BalloonRenderer extends FixedGeoItemRenderer<StarBalloon> {
+public class BalloonRenderer extends GeoItemRenderer<StarBalloon> {
 
     public BalloonRenderer() {
         super(new GenericModel<StarBalloon>("star_balloon", "entity"));

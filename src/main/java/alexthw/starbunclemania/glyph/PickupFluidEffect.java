@@ -15,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.level.Level;
@@ -105,7 +106,7 @@ public class PickupFluidEffect extends AbstractEffect {
                 world.setBlockAndUpdate(pPos, Blocks.CAULDRON.defaultBlockState());
                 tank.fill(tester, IFluidHandler.FluidAction.EXECUTE);
                 if (tank instanceof WrappedExtractedItemHandler wrap) wrap.updateContainer();
-                ShapersFocus.tryPropagateBlockSpell(resolveResult, world, shooter, spellContext, resolver);
+                ShapersFocus.tryPropagateBlockSpell(resolveResult, world, (Entity) shooter, spellContext, resolver);
                 break;
             }
         }
@@ -117,7 +118,7 @@ public class PickupFluidEffect extends AbstractEffect {
             FluidStack tester = new FluidStack(ForgeMod.MILK.get(), 1000);
             if (tank.fill(tester, IFluidHandler.FluidAction.SIMULATE) == 1000) {
                 tank.fill(tester, IFluidHandler.FluidAction.EXECUTE);
-                cow.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 20, 1, false,false, false));
+                cow.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 20, 1, false, false, false));
                 break;
             }
         }
@@ -132,7 +133,7 @@ public class PickupFluidEffect extends AbstractEffect {
                 bp.pickupBlock(world, pPos, world.getBlockState(pPos));
                 tank.fill(tester, IFluidHandler.FluidAction.EXECUTE);
                 if (tank instanceof WrappedExtractedItemHandler wrap) wrap.updateContainer();
-                ShapersFocus.tryPropagateBlockSpell(resolveResult, world, shooter, spellContext, resolver);
+                ShapersFocus.tryPropagateBlockSpell(resolveResult, world, (Entity) shooter, spellContext, resolver);
                 break;
             }
         }

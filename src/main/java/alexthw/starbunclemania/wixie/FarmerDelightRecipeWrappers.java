@@ -51,7 +51,7 @@ public class FarmerDelightRecipeWrappers {
             }
             if (level.getServer() == null) return wrapper;
             for (Recipe<?> r : level.getServer().getRecipeManager().getRecipes()) {
-                if (r.value() instanceof CookingPotRecipe cookingPotRecipe) {
+                if (r instanceof CookingPotRecipe cookingPotRecipe) {
                     if (cookingPotRecipe.getResultItem(level.registryAccess()).getItem() != stack.getItem())
                         continue;
                     ArrayList<Ingredient> extended_ingredients = new ArrayList<>(cookingPotRecipe.getIngredients());

@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -68,7 +69,7 @@ public class PlaceFluidEffect extends AbstractEffect {
         if (tanks.isEmpty()) return;
 
         for (BlockPos pos1 : posList) {
-            if (!BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, pos1))
+            if (!BlockUtil.destroyRespectsClaim((Entity) getPlayer(shooter, (ServerLevel) world), world, pos1))
                 continue;
             pos1 = spellStats.getBuffCount(AugmentSensitive.INSTANCE) > 0 ? pos1 : pos1.relative(rayTraceResult.getDirection());
             if (world.getBlockEntity(pos1) != null && world.getBlockEntity(pos1).getCapability(ForgeCapabilities.FLUID_HANDLER, rayTraceResult.getDirection()).isPresent()) {
@@ -136,7 +137,7 @@ public class PlaceFluidEffect extends AbstractEffect {
                 }
                 tank.drain(tester, IFluidHandler.FluidAction.EXECUTE);
                 if (tank instanceof WrappedExtractedItemHandler wrap) wrap.updateContainer();
-                ShapersFocus.tryPropagateBlockSpell(resolveResult, world, shooter, spellContext, resolver);
+                ShapersFocus.tryPropagateBlockSpell(resolveResult, world, (Entity) shooter, spellContext, resolver);
                 break;
             }
         }

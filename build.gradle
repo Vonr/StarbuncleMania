@@ -181,7 +181,7 @@ dependencies {
     implementation fg.deobf("com.simibubi.create:create-1.20.1:0.5.1.f-26:all") { transitive = false }
     implementation fg.deobf("curse.maven:eidolon-repraised-870250:5207777")
 
-    implementation fg.deobf("curse.maven:farmers-delight-398521:4679319")
+    implementation fg.deobf("curse.maven:farmers-delight-398521:5878214")
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:0.2.0-beta.8"))
     implementation("com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.8")

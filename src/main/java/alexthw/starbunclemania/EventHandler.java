@@ -20,8 +20,6 @@ import static alexthw.starbunclemania.StarbuncleMania.prefix;
 @Mod.EventBusSubscriber(modid = StarbuncleMania.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
 
-
-
     @SubscribeEvent
     public static void registerCaps(AttachCapabilitiesEvent<BlockEntity> event) {
         if (event.getObject() instanceof MobJarTile tile){

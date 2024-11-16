@@ -2,7 +2,6 @@ package alexthw.starbunclemania.client;
 
 import alexthw.starbunclemania.common.block.fluids.LiquidJarTile;
 import alexthw.starbunclemania.common.item.FluidJarItem;
-import com.hollingsworth.arsnouveau.client.renderer.item.FixedGeoItemRenderer;
 import com.hollingsworth.arsnouveau.client.renderer.tile.GenericModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -20,6 +19,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 public class JarRenderer implements BlockEntityRenderer<LiquidJarTile> {
 
@@ -27,7 +27,7 @@ public class JarRenderer implements BlockEntityRenderer<LiquidJarTile> {
         super();
     }
 
-    public static class ISTER extends FixedGeoItemRenderer<FluidJarItem> {
+    public static class ISTER extends GeoItemRenderer<FluidJarItem> {
 
         public ISTER() {
             super(new GenericModel<FluidJarItem>("fluid_jar"));
