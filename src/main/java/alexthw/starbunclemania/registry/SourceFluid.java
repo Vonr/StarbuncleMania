@@ -19,8 +19,6 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-import java.util.function.Consumer;
-
 import static alexthw.starbunclemania.registry.ModRegistry.*;
 
 public class SourceFluid extends FluidType {
@@ -31,92 +29,75 @@ public class SourceFluid extends FluidType {
         super(FluidType.Properties.create().supportsBoating(true).canHydrate(true).density(1).temperature(1).viscosity(1));
     }
 
-    @Override
-    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer)
-    {
-        consumer.accept(new IClientFluidTypeExtensions()
-        {
-            private static final ResourceLocation STILL = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID,"block/potion_still"),
-                    FLOW = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID,"block/potion_still"),
-                    OVERLAY = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/sourcestone"),
-                    VIEW_OVERLAY = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/block/sourcestone.png");
+    public static IClientFluidTypeExtensions extension = (new IClientFluidTypeExtensions() {
+        private static final ResourceLocation STILL = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/potion_still"),
+                FLOW = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/potion_still"),
+                OVERLAY = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/sourcestone"),
+                VIEW_OVERLAY = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/block/sourcestone.png");
 
-            @Override
-            public @NotNull ResourceLocation getStillTexture()
-            {
-                return STILL;
+        @Override
+        public @NotNull ResourceLocation getStillTexture() {
+            return STILL;
+        }
+
+        @Override
+        public @NotNull ResourceLocation getFlowingTexture() {
+            return FLOW;
+        }
+
+        @Override
+        public ResourceLocation getOverlayTexture() {
+            return OVERLAY;
+        }
+
+        @Override
+        public ResourceLocation getRenderOverlayTexture(@NotNull Minecraft mc) {
+            return VIEW_OVERLAY;
+        }
+
+        @Override
+        public int getTintColor() {
+            return 0xDF9B13FB;
+        }
+
+        @Override
+        public @NotNull Vector3f modifyFogColor(@NotNull Camera camera, float partialTick, @NotNull ClientLevel level, int renderDistance, float darkenWorldAmount, @NotNull Vector3f fluidFogColor) {
+            int color = this.getTintColor();
+            return new Vector3f((color >> 16 & 0xFF) / 255F, (color >> 8 & 0xFF) / 255F, (color & 0xFF) / 255F);
+        }
+
+        @Override
+        public void modifyFogRender(@NotNull Camera camera, FogRenderer.@NotNull FogMode mode, float renderDistance, float partialTick, float nearDistance, float farDistance, @NotNull FogShape shape) {
+            nearDistance = -8F;
+            farDistance = 24F;
+
+            if (farDistance > renderDistance) {
+                farDistance = renderDistance;
+                shape = FogShape.CYLINDER;
             }
 
-            @Override
-            public @NotNull ResourceLocation getFlowingTexture()
-            {
-                return FLOW;
-            }
+            RenderSystem.setShaderFogStart(nearDistance);
+            RenderSystem.setShaderFogEnd(farDistance);
+            RenderSystem.setShaderFogShape(shape);
+        }
+    });
 
-            @Override
-            public ResourceLocation getOverlayTexture()
-            {
-                return OVERLAY;
-            }
 
-            @Override
-            public ResourceLocation getRenderOverlayTexture(@NotNull Minecraft mc)
-            {
-                return VIEW_OVERLAY;
-            }
-
-            @Override
-            public int getTintColor()
-            {
-                return 0xDF9B13FB;
-            }
-
-            @Override
-            public @NotNull Vector3f modifyFogColor(@NotNull Camera camera, float partialTick, @NotNull ClientLevel level, int renderDistance, float darkenWorldAmount, @NotNull Vector3f fluidFogColor)
-            {
-                int color = this.getTintColor();
-                return new Vector3f((color >> 16 & 0xFF) / 255F, (color >> 8 & 0xFF) / 255F, (color & 0xFF) / 255F);
-            }
-
-            @Override
-            public void modifyFogRender(@NotNull Camera camera, FogRenderer.@NotNull FogMode mode, float renderDistance, float partialTick, float nearDistance, float farDistance, @NotNull FogShape shape)
-            {
-                nearDistance = -8F;
-                farDistance = 24F;
-
-                if (farDistance > renderDistance)
-                {
-                    farDistance = renderDistance;
-                    shape = FogShape.CYLINDER;
-                }
-
-                RenderSystem.setShaderFogStart(nearDistance);
-                RenderSystem.setShaderFogEnd(farDistance);
-                RenderSystem.setShaderFogShape(shape);
-            }
-        });
-    }
-
-    public static class FluidTypeSourceClient
-    {
-        public FluidTypeSourceClient(IEventBus modEventBus)
-        {
+    public static class FluidTypeSourceClient {
+        public FluidTypeSourceClient(IEventBus modEventBus) {
             modEventBus.addListener(this::clientSetup);
             modEventBus.addListener(this::registerBlockColors);
         }
 
-        public void clientSetup(FMLClientSetupEvent ignoredEvent)
-        {
+        public void clientSetup(FMLClientSetupEvent ignoredEvent) {
             ItemBlockRenderTypes.setRenderLayer(SOURCE_FLUID.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(SOURCE_FLUID_FLOWING.get(), RenderType.translucent());
         }
 
-        private void registerBlockColors(RegisterColorHandlersEvent.Block event)
-        {
+        private void registerBlockColors(RegisterColorHandlersEvent.Block event) {
             event.register((state, getter, pos, index) ->
             {
-                if (getter != null && pos != null)
-                {
+                if (getter != null && pos != null) {
                     FluidState fluidState = getter.getFluidState(pos);
                     return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
                 } else return 0xAF7FFFD4;

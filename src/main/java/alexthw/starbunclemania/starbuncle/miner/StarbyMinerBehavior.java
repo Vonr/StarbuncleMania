@@ -220,7 +220,7 @@ public class StarbyMinerBehavior extends StarbyItemBehavior implements Authorize
     }
 
     public boolean canMineBlock(BlockPos targetPos) {
-        Entity playerEntity = ownerUUID != null && starbuncle.level() instanceof ServerLevel serverLevel ? FakePlayerFactory.get(serverLevel, new GameProfile(getOwnerUUID(), "")) : starbuncle;
+        LivingEntity playerEntity = ownerUUID != null && starbuncle.level() instanceof ServerLevel serverLevel ? FakePlayerFactory.get(serverLevel, new GameProfile(getOwnerUUID(), "")) : starbuncle;
         return BlockUtil.destroyRespectsClaim(playerEntity, starbuncle.level(), targetPos);
     }
 
