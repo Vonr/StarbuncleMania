@@ -55,4 +55,13 @@ public class SourceCondenserBlock extends TickableModBlock {
     }
 
     static final VoxelShape shape = Shapes.join(Block.box(3, 1.1, 3, 13, 12.1, 13), Block.box(2, 0, 2, 14, 1, 14), BooleanOp.OR);
+
+    @Override
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);
+        if (!world.isClientSide() && world.getBlockEntity(pos) instanceof SourceCondenserTile condenserTile) {
+            condenserTile.disabled = world.hasNeighborSignal(pos);
+            condenserTile.updateBlock();
+        }
+    }
 }

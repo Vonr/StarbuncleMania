@@ -21,6 +21,8 @@ public class Setup {
 
         gen.addProvider(event.includeClient(), new StarItemModelProvider(gen, event.getExistingFileHelper()));
         gen.addProvider(event.includeServer(), new StarBlockTagsProvider(gen, event.getLookupProvider(), event.getExistingFileHelper()));
+        gen.addProvider(event.includeServer(), new StarItemTagsProvider(gen.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+
         gen.addProvider(event.includeServer(), new FluidTagsProvider(gen.getPackOutput(), event.getLookupProvider(), StarbuncleMania.MODID, event.getExistingFileHelper()) {
             @Override
             protected void addTags(HolderLookup.@NotNull Provider provider) {

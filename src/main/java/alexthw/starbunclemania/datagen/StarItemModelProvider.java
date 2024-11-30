@@ -24,8 +24,8 @@ public class StarItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         directionScroll();
-        generatedItem(ModRegistry.FLUID_SCROLL_D);
-        generatedItem(ModRegistry.FLUID_SCROLL_A);
+        generatedItem(ModRegistry.FLUID_SCROLL_DENY);
+        generatedItem(ModRegistry.FLUID_SCROLL_ALLOW);
     }
 
     private void directionScroll() {

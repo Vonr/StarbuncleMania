@@ -126,20 +126,29 @@ public class ModRegistry {
     }
 
     public static final DeferredHolder<Item, Item> DIRECTION_SCROLL;
-    public static final DeferredHolder<Item, Item> FLUID_SCROLL_A;
-    public static final DeferredHolder<Item, Item> FLUID_SCROLL_D;
+    public static final DeferredHolder<Item, Item> FLUID_SCROLL_ALLOW;
+    public static final DeferredHolder<Item, Item> FLUID_SCROLL_DENY;
 
-    public static final DeferredHolder<Item, Item> STARHAT;
-    public static final DeferredHolder<Item, Item> PROFHAT;
-    public static final DeferredHolder<Item, Item> STARBATTERY;
-    public static final DeferredHolder<Item, Item> STARBUCKET;
-    public static final DeferredHolder<Item, Item> STARBALLON;
-    public static final DeferredHolder<Item, Item> STARTRASH;
-    public static final DeferredHolder<Item, Item> STARSWORD;
-    public static final DeferredHolder<Item, Item> STARWAND;
-    public static final DeferredHolder<Item, Item> STARSADDLE;
-    public static final DeferredHolder<Item, Item> STARMINE;
-    public static final DeferredHolder<Item, Item> STARBUILD;
+    public static final DeferredHolder<Item, Item>
+            STARHAT,
+            PROFHAT,
+            STARBATTERY,
+            STARBUCKET,
+            STARBALLON,
+            STARTRASH,
+            STARSWORD,
+            STARWAND,
+            STARSADDLE,
+            STARMINE,
+            STARBUILD;
+
+    public static final DeferredHolder<Item, ? extends PlayerCurioCosmetic>
+            STARBY_EARS,
+            DRYGMY_HORNS,
+            ALAK_HAT,
+            SEA_BUNNY,
+            WHIRLI_PROP;
+
 
     public static final DeferredHolder<Block, Block> FLUID_JAR;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LiquidJarTile>> FLUID_JAR_TILE;
@@ -160,20 +169,31 @@ public class ModRegistry {
 
     static {
 
+        // Player Items
+        STARBY_EARS = ITEMS.register("starby_ears", () -> new PlayerCurioCosmetic(basicItemProperties()).withTooltip("starbunclemania.starby_ears.tooltip"));
+        DRYGMY_HORNS = ITEMS.register("drygmy_horns", () -> new PlayerCurioCosmetic(basicItemProperties()).withTooltip("starbunclemania.drygmy_horns.tooltip"));
+        ALAK_HAT = ITEMS.register("alak_hat", () -> new PlayerCurioCosmetic(basicItemProperties()).withTooltip("starbunclemania.alak_hat.tooltip"));
+        SEA_BUNNY = ITEMS.register("sea_bunny", () -> new PlayerCurioCosmetic(basicItemProperties()).withTooltip("starbunclemania.sea_bunny.tooltip"));
+        WHIRLI_PROP = ITEMS.register("whirli_prop", () -> new PlayerCurioCosmetic(basicItemProperties()).withTooltip("starbunclemania.whirli_prop.tooltip"));
+
+        // Starbuncle Items
+
         STARHAT = ITEMS.register("star_hat", () -> new ExampleCosmetic(basicItemProperties(), "starbunclemania.simple_cosmetic.tooltip"));
         PROFHAT = ITEMS.register("wyrm_degree", () -> new ProfHat(basicItemProperties(), "starbunclemania.degree_hat.tooltip"));
-        STARBATTERY = ITEMS.register("star_battery", () -> new StarbAABattery(basicItemProperties(),"starbunclemania.battery.tooltip"));
-        STARBUCKET = ITEMS.register("star_bucket", () -> new StarBucket(basicItemProperties(),"starbunclemania.bucket.tooltip"));
+        STARBATTERY = ITEMS.register("star_battery", () -> new StarbAABattery(basicItemProperties(), "starbunclemania.battery.tooltip"));
+        STARBUCKET = ITEMS.register("star_bucket", () -> new StarBucket(basicItemProperties(), "starbunclemania.bucket.tooltip"));
         STARBALLON = ITEMS.register("star_balloon", () -> new StarBalloon(basicItemProperties(), "starbunclemania.balloon.tooltip"));
-        STARTRASH = ITEMS.register("star_bin", () -> new StarBin(basicItemProperties(),"starbunclemania.trash_bin.tooltip"));
+        STARTRASH = ITEMS.register("star_bin", () -> new StarBin(basicItemProperties(), "starbunclemania.trash_bin.tooltip"));
         STARSWORD = ITEMS.register("star_sword", () -> new StarSword(basicItemProperties()));
         STARWAND = ITEMS.register("star_wand", () -> new StarWand(new Item.Properties()));
         STARMINE = ITEMS.register("star_miner", () -> new MinerHat(basicItemProperties(), "starbunclemania.miner_hat.tooltip"));
         STARBUILD = ITEMS.register("star_build", () -> new ArchitectHat(basicItemProperties(), "starbunclemania.builder_hat.tooltip"));
 
+        // Scrolls
+
         DIRECTION_SCROLL = ITEMS.register("direction_scroll", () -> new DirectionScroll(basicItemProperties()));
-        FLUID_SCROLL_A = ITEMS.register("fluid_scroll_allow", () -> new FluidScroll(basicItemProperties()));
-        FLUID_SCROLL_D = ITEMS.register("fluid_scroll_deny", () -> new FluidScroll(basicItemProperties()) {
+        FLUID_SCROLL_ALLOW = ITEMS.register("fluid_scroll_allow", () -> new FluidScroll(basicItemProperties()));
+        FLUID_SCROLL_DENY = ITEMS.register("fluid_scroll_deny", () -> new FluidScroll(basicItemProperties()) {
             @Override
             public boolean isDenied(ItemStack fluidScroll, FluidStack fluidInTank) {
                 FluidScrollData filter = fluidScroll.get(FLUID_SCROLL);
@@ -185,6 +205,9 @@ public class ModRegistry {
         });
 
         STARSADDLE = ITEMS.register("star_saddle", () -> new StarbySaddle(basicItemProperties()));
+        STARBY_MOUNT = addEntity("starby_mount", 2, 2, true, false, (entityCarbuncleEntityType, world) -> new StarbyMountEntity(entityCarbuncleEntityType, world), MobCategory.CREATURE);
+
+        // Fluids
 
         FLUID_JAR = BLOCKS.register("fluid_jar", () -> new LiquidJarBlock());
         ITEMS.register("fluid_jar", () -> new FluidJarItem(FLUID_JAR.get(), basicItemProperties().stacksTo(1)));
@@ -208,7 +231,7 @@ public class ModRegistry {
             }
         });
 
-        STARBY_MOUNT = addEntity("starby_mount", 2, 2, true, false, (entityCarbuncleEntityType, world) -> new StarbyMountEntity(entityCarbuncleEntityType, world), MobCategory.CREATURE);
+        //Wixie Cauldrons
 
         SMELTING_WIXIE_CAULDRON = BLOCKS.register("smelting_wixie_cauldron", SmeltingWixieCauldron::new);
         SMELTING_WIXIE_CAULDRON_TILE = BLOCK_ENTITIES.register("smelting_wixie_cauldron_tile", () -> BlockEntityType.Builder.of(SmeltingWixieCauldronTile::new, SMELTING_WIXIE_CAULDRON.get()).build(null));

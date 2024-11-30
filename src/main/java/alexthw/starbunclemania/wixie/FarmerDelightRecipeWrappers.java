@@ -27,11 +27,11 @@ public class FarmerDelightRecipeWrappers {
             if (level.getServer() == null) return wrapper;
             for (RecipeHolder<?> r : level.getServer().getRecipeManager().getRecipes()) {
 
-                if (r.value().getResultItem(level.registryAccess()).getItem() != stack.getItem())
-                    continue;
-
-                if (r.value() instanceof CuttingBoardRecipe cuttingBoardRecipe)
+                if (r.value() instanceof CuttingBoardRecipe cuttingBoardRecipe) {
+                    if (r.value().getResultItem(level.registryAccess()).getItem() != stack.getItem())
+                        continue;
                     wrapper.addRecipe(cuttingBoardRecipe.getIngredients(), cuttingBoardRecipe.getResultItem(level.registryAccess()), cuttingBoardRecipe);
+                }
 
             }
 

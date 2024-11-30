@@ -102,10 +102,10 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         shapelessBuilder(DIRECTION_SCROLL.get()).requires(ItemsRegistry.BLANK_PARCHMENT).requires(Items.COMPASS).save(consumer);
-        shapelessBuilder(FLUID_SCROLL_A.get()).requires(ItemsRegistry.BLANK_PARCHMENT).requires(ItemsRegistry.WATER_ESSENCE).save(consumer);
-        shapelessBuilder(FLUID_SCROLL_D.get()).requires(ItemsRegistry.BLANK_PARCHMENT).requires(ItemsRegistry.WATER_ESSENCE).requires(Ingredient.of(Tags.Items.COBBLESTONES)).save(consumer);
-        shapelessBuilder(FLUID_SCROLL_A.get()).requires(FLUID_SCROLL_A.get()).save(consumer, prefix("clear_fluid_allow"));
-        shapelessBuilder(FLUID_SCROLL_D.get()).requires(FLUID_SCROLL_D.get()).save(consumer, prefix("clear_fluid_deny"));
+        shapelessBuilder(FLUID_SCROLL_ALLOW.get()).requires(ItemsRegistry.BLANK_PARCHMENT).requires(ItemsRegistry.WATER_ESSENCE).save(consumer);
+        shapelessBuilder(FLUID_SCROLL_DENY.get()).requires(ItemsRegistry.BLANK_PARCHMENT).requires(ItemsRegistry.WATER_ESSENCE).requires(Ingredient.of(Tags.Items.COBBLESTONES)).save(consumer);
+        shapelessBuilder(FLUID_SCROLL_ALLOW.get()).requires(FLUID_SCROLL_ALLOW.get()).save(consumer, prefix("clear_fluid_allow"));
+        shapelessBuilder(FLUID_SCROLL_DENY.get()).requires(FLUID_SCROLL_DENY.get()).save(consumer, prefix("clear_fluid_deny"));
 
     }
 

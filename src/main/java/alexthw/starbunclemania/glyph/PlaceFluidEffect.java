@@ -40,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -69,7 +70,7 @@ public class PlaceFluidEffect extends AbstractEffect {
         for (BlockPos pos1 : posList) {
             if (!BlockUtil.destroyRespectsClaim(getPlayer(shooter, (ServerLevel) world), world, pos1))
                 continue;
-            pos1 = spellStats.getBuffCount(AugmentSensitive.INSTANCE) > 0 ? pos1 : pos1.relative(rayTraceResult.getDirection());
+            pos1 = spellStats.isSensitive() ? pos1 : pos1.relative(rayTraceResult.getDirection());
             if (world.getCapability(Capabilities.FluidHandler.BLOCK, pos1, rayTraceResult.getDirection()) != null) {
                 var cap = StarbyFluidBehavior.getHandlerFromCap(pos1, world, rayTraceResult.getDirection());
                 this.placeInTank(cap, tanks);
@@ -206,5 +207,12 @@ public class PlaceFluidEffect extends AbstractEffect {
     @Override
     protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
         return augmentSetOf(AugmentSensitive.INSTANCE, AugmentAOE.INSTANCE, AugmentPierce.INSTANCE);
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        addBlockAoeAugmentDescriptions(map);
+        map.put(AugmentSensitive.INSTANCE, "Places the fluid inside the block hit instead of relative to it.");
     }
 }

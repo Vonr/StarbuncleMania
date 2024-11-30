@@ -19,6 +19,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class SourceCondenserTile extends AbstractTankTile implements GeoBlockEntity, ITickable {
 
+    public boolean disabled = false;
+
     public SourceCondenserTile(BlockPos pos, BlockState state) {
         super(ModRegistry.SOURCE_CONDENSER_TILE.get(), pos, state);
         tank.setValidator((stack) -> stack.getFluid().getFluidType() == ModRegistry.SOURCE_FLUID_TYPE.get());
@@ -33,7 +35,7 @@ public class SourceCondenserTile extends AbstractTankTile implements GeoBlockEnt
     @Override
     public void tick() {
         if (level != null && !level.isClientSide() && level.getGameTime() % 40 == 0) {
-            if (this.tank.fill(tester, IFluidHandler.FluidAction.SIMULATE) == 1000) {
+            if (this.tank.fill(tester, IFluidHandler.FluidAction.SIMULATE) == 1000 && !disabled) {
                 if (SourceUtil.takeSourceWithParticles(getBlockPos(), level, 6, Configs.SOURCE_TO_FLUID.get()) != null) {
                     this.tank.fill(tester, IFluidHandler.FluidAction.EXECUTE);
                 }

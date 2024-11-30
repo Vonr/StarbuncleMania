@@ -40,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.starbunclemania.StarbuncleMania.prefix;
@@ -178,4 +179,9 @@ public class PickupFluidEffect extends AbstractEffect {
         return augmentSetOf(AugmentAOE.INSTANCE, AugmentPierce.INSTANCE);
     }
 
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        addBlockAoeAugmentDescriptions(map);
+    }
 }
