@@ -76,7 +76,7 @@ public class FluidSourcelinkTile extends SourcelinkTile implements ITooltipProvi
             }
             if (!level.isClientSide() && level.getGameTime() % 20 == 0 && this.canAcceptSource()) {
                 double sourceFromFluid = getSourceFromFluid(this.getFluid());
-                if (sourceFromFluid > 0 && this.canAcceptSource((int) (sourceFromFluid * 500))) {
+                if (sourceFromFluid > 0 && getSource() + (int) (sourceFromFluid * 500) <= getMaxSource()) {
                     int maxDrain = Math.min(Mth.ceil((getMaxSource() - getSource()) / sourceFromFluid), 2000);
                     int drain = this.tank.drain(maxDrain, IFluidHandler.FluidAction.EXECUTE).getAmount();
                     this.addSource((int) (drain * sourceFromFluid));
